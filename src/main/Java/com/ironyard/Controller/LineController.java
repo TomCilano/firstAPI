@@ -30,15 +30,65 @@ public class LineController {
         return saved;
     }
 
+    /**
+     * breaking down th pieces to this method
+     * @param aLineItem
+     * @return
+     */
+    /*
+        Annotation              Path                        method
+             |                   |                             |
+             V                   V                             V
+     */
     @RequestMapping(value = "/line/update", method = RequestMethod.PUT)
+    /*
+                    Method 'update'
+
+             POJO    method    (Annotation to request body)
+               |      name          |         POJO      reference
+               v        V           |          |            |
+                                    v          V            V
+     */
     public  LineItems update (@RequestBody LineItems aLineItem) {
+       /*
+        Java object
+         or 'POJO'      reference to POJO
+              |         /
+              |        /        set to null
+              V       /   gets    /
+       *///          V    V      V
         LineItems updated = null;
-        try {
-            lineService.update(aLineItem);
+
+       /*
+            try / catch method used to catch exceptions
+
+             Call service class
+                  |        It calls the update method
+                  |              /
+                  |             /       the reference to th LineItems POJO
+        *///      V            V         V
+        try { lineService.update(aLineItem);
+        /*
+           reference            Class reference            uses the POJO
+              |    gets        /     calls get Id service  |   ------- calls Id Getter
+              |     |         /         \           ______/  /
+         */// V     V        V           V         V        V
             updated = lineService.getItemById(aLineItem.getId());
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+        /*
+               Catch SQL Exception    Reference
+             /   |            _______/
+        *///V    V           V
+        catch (SQLException e){
+        /*          Reference    calls printStackTrace method
+              ____/     ________/
+        */// V         V
+             e.printStackTrace();
+        }
+
+         /*
+             Returns the now populated updated
+          */
         return updated;
     }
    @RequestMapping (value = "/line/{id}", method = RequestMethod.GET)
